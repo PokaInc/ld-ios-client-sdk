@@ -20,7 +20,7 @@ extension LDFlagKey {
 }
 
 /// An error thrown from APIs when an invalid argument is provided.
-@objc public class LDInvalidArgumentError: NSObject, Error {
+@objc public class LDInvalidArgumentError: NSObject, Error, @unchecked Sendable {
     /// A description of the error.
     public let localizedDescription: String
 
@@ -60,7 +60,8 @@ public enum LDValue: Codable,
                      ExpressibleByFloatLiteral,
                      ExpressibleByStringLiteral,
                      ExpressibleByArrayLiteral,
-                     ExpressibleByDictionaryLiteral {
+                     ExpressibleByDictionaryLiteral,
+                     Sendable {
 
     public typealias StringLiteralType = String
 

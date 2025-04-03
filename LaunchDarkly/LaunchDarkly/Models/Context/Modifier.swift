@@ -72,12 +72,12 @@ class AutoEnvContextModifier {
     //
     // Begin recipe definition for ld_device kind
     //
-    static var ldDeviceKind = "ld_device"
-    static var attrManufacturer = "manufacturer"
-    static var attrModel = "model"
-    static var attrLocale = "locale"
-    static var attrOs = "os"
-    static var attrFamily = "family"
+    nonisolated(unsafe) static var ldDeviceKind = "ld_device"
+    nonisolated(unsafe) static var attrManufacturer = "manufacturer"
+    nonisolated(unsafe) static var attrModel = "model"
+    nonisolated(unsafe) static var attrLocale = "locale"
+    nonisolated(unsafe) static var attrOs = "os"
+    nonisolated(unsafe) static var attrFamily = "family"
 
     private func deviceRecipe() -> ContextRecipe {
         let keyCallable: () -> (String) = {

@@ -3,7 +3,7 @@ import Foundation
 /**
  Denotes the result of an identify request made through the `LDClient.identify(context: completion:)` method.
  */
-public enum IdentifyResult {
+public enum IdentifyResult: Sendable {
     /**
      The identify request has completed successfully.
      */
@@ -37,7 +37,7 @@ public enum IdentifyResult {
  When a new `LDContext` is being identified, the SDK has a few choices it can make on how to handle intermediate flag evaluations
  until fresh values have been retrieved from the LaunchDarkly APIs.
  */
-public enum IdentifyCacheUsage {
+public enum IdentifyCacheUsage: Sendable {
     /**
      `no` will not load any flag values from the cache. Instead it will maintain the current in memory state from the previously identified context.
 

@@ -2,7 +2,7 @@ import Foundation
 import OSLog
 
 /// Defines the connection modes the SDK may be configured to use to retrieve feature flag data from LaunchDarkly.
-public enum LDStreamingMode {
+public enum LDStreamingMode: Sendable {
     /**
      In streaming mode, the SDK uses a streaming connection to receive feature flag data from LaunchDarkly. When a flag
      is updated in the dashboard, the stream notifies the SDK of changes to the evaluation result for the current context.
@@ -32,7 +32,7 @@ public enum LDStreamingMode {
  you can use targeting rules to enable "dark mode" for all customers who are using version 15 or greater, and ensure
  that customers on previous versions don't use the earlier, unfinished version of the feature.
  */
-@objc public enum AutoEnvAttributes: Int {
+@objc public enum AutoEnvAttributes: Int, Sendable {
     /// Enables the Auto EnvironmentAttributes functionality.
     case enabled
     /// Disables the Auto EnvironmentAttributes functionality.
@@ -51,13 +51,13 @@ typealias MobileKey = String
  - parameter headers: The default headers that would be used
  - returns: The headers that will be used in the request
  */
-public typealias RequestHeaderTransform = (_ url: URL, _ headers: [String: String]) -> [String: String]
+public typealias RequestHeaderTransform = @Sendable (_ url: URL, _ headers: [String: String]) -> [String: String]
 
 /// Defines application metadata.
 ///
 /// These properties are optional and informational. They may be used in LaunchDarkly
 /// analytics or other product features.
-public struct ApplicationInfo: Equatable {
+public struct ApplicationInfo: Equatable, Sendable {
     internal var applicationId: String?
     internal var applicationName: String?
     internal var applicationVersion: String?
@@ -177,10 +177,10 @@ public struct ApplicationInfo: Equatable {
 /**
  Use LDConfig to configure the LDClient. When initialized, a LDConfig contains the default values which can be changed as needed.
  */
-public struct LDConfig {
+public struct LDConfig: Sendable {
 
     /// The default values set when a LDConfig is initialized
-    struct Defaults {
+    struct Defaults: Sendable {
         /// The default base url for making feature flag requests
         static let baseUrl = URL(string: "https://app.launchdarkly.com")!
         /// The default base url for making event reports
@@ -263,23 +263,23 @@ public struct LDConfig {
     }
 
     /// Constants relevant to setting up an `LDConfig`
-    public struct Constants {
+    public struct Constants: Sendable {
         /// The default environment name that must be present in a single or multiple environment configuration
         public static let primaryEnvironmentName = "default"
     }
 
     /// The minimum values allowed to be set into LDConfig.
-    public struct Minima {
+    public struct Minima: Sendable {
 
         // swiftlint:disable:next nesting
-        struct Production {
+        struct Production: Sendable {
             static let flagPollingInterval: TimeInterval = 300.0
             static let backgroundFlagPollingInterval: TimeInterval = 900.0
             static let diagnosticRecordingInterval: TimeInterval = 300.0
         }
 
         // swiftlint:disable:next nesting
-        struct Debug {
+        struct Debug: Sendable {
             static let flagPollingInterval: TimeInterval = 30.0
             static let backgroundFlagPollingInterval: TimeInterval = 60.0
             static let diagnosticRecordingInterval: TimeInterval = 60.0
@@ -445,7 +445,7 @@ public struct LDConfig {
     /// Initial set of hooks for the client.
     ///
     /// Hooks provide entry points which allow for observation of SDK functions.
-    public var hooks: [Hook] = Defaults.hooks
+    public var hooks: [any Hook] = Defaults.hooks
 
     /// Initial set of plugins for the client.
     ///

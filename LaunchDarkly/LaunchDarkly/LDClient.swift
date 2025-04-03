@@ -40,7 +40,7 @@ public class LDClient {
 
     // MARK: - State Controls and Indicators
 
-    private static var instances: [String: LDClient]?
+    nonisolated(unsafe) private static var instances: [String: LDClient]?
     private static let instancesQueue = DispatchQueue(label: "com.launchdarkly.LDClient.instancesQueue")
 
     // If the SDK is provided a timeout value that exceeds this value, a warning will be logged.
@@ -367,6 +367,14 @@ public class LDClient {
      */
     public func identify(context: LDContext, timeout: TimeInterval, completion: @escaping ((_ result: IdentifyResult) -> Void)) {
         identify(context: context, timeout: timeout, useCache: .yes, completion: completion)
+    }
+
+    public func identify(context: LDContext, timeout: TimeInterval) async -> IdentifyResult {
+        await withCheckedContinuation { continuation in
+            identify(context: context, timeout: timeout, useCache: .yes, completion: { result in
+                continuation.resume(returning: result)
+            })
+        }
     }
 
     /**
@@ -851,6 +859,14 @@ public class LDClient {
         }
 
         start(serviceFactory: nil, config: config, context: context, startWaitSeconds: startWaitSeconds, completion: completion)
+    }
+
+    public static func start(config: LDConfig, context: LDContext? = nil, startWaitSeconds: TimeInterval) async -> Bool {
+        await withCheckedContinuation { continuation in
+            LDClient.start(serviceFactory: nil, config: config, startWaitSeconds: startWaitSeconds) { timeout in
+                continuation.resume(returning: timeout)
+            }
+        }
     }
 
     static func start(serviceFactory: ClientServiceCreating?, config: LDConfig, context: LDContext? = nil, startWaitSeconds: TimeInterval, completion: ((_ timedOut: Bool) -> Void)? = nil) {

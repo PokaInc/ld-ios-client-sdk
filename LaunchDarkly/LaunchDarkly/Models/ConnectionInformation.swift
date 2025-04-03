@@ -1,12 +1,12 @@
 import Foundation
 import OSLog
 
-public struct ConnectionInformation: Codable, CustomStringConvertible {
-    public enum ConnectionMode: String, Codable {
+public struct ConnectionInformation: Codable, CustomStringConvertible, Sendable {
+    public enum ConnectionMode: String, Codable, Sendable {
         case streaming, offline, establishingStreamingConnection, polling
     }
 
-    public enum LastConnectionFailureReason: Codable, CustomStringConvertible {
+    public enum LastConnectionFailureReason: Codable, CustomStringConvertible, Sendable {
         public var description: String {
             switch self {
             case .unauthorized:

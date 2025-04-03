@@ -1,7 +1,7 @@
 import Foundation
 
 /// Enumeration representing various modes of failures when constructing an `LDContext`.
-public enum ContextBuilderError: Error {
+public enum ContextBuilderError: Error, Sendable {
     /// The provided kind either contains invalid characters, or is the disallowed kind "kind".
     case invalidKind
     /// The `LDMultiContextBuilder` must be used when attempting to build a multi-context.
@@ -22,7 +22,7 @@ public enum ContextBuilderError: Error {
 /// To create an LDContext of a single kind, such as a user, you may use `LDContextBuilder`.
 ///
 /// To create an LDContext with multiple kinds, use `LDMultiContextBuilder`.
-public struct LDContext: Encodable, Equatable {
+public struct LDContext: Encodable, Equatable, Sendable {
     static let storedIdKey: String = "ldDeviceIdentifier"
 
     internal var kind: Kind = .user
@@ -623,7 +623,7 @@ enum LDContextBuilderKey {
 /// is false, and it has no values for any other attributes.
 ///
 /// To define a multi-context, see `LDMultiContextBuilder`.
-public struct LDContextBuilder {
+public struct LDContextBuilder: Sendable {
     private var kind: String = Kind.user.description
 
     // Meta attributes
@@ -880,7 +880,7 @@ extension LDContextBuilder: TypeIdentifying { }
 /// `LDMultiContextBuilder.addContext(_:)` to specify the nested LDContext for each kind.
 /// LDMultiContextBuilder setters return a reference the same builder, so they can be chained
 /// together.
-public struct LDMultiContextBuilder {
+public struct LDMultiContextBuilder: Sendable {
     private var contexts: [LDContext] = []
 
     /// Create a new LDMultiContextBuilder with the provided `key`.

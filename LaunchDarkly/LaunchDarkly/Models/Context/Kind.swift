@@ -6,7 +6,7 @@ import Foundation
 ///
 /// For a multi-context (see `LDMultiContextBuilder`), the Kind is always `Kind.multi`;
 /// there is a specific Kind for each of the individual Contexts within it.
-public enum Kind: Codable, Equatable, Hashable {
+public enum Kind: Codable, Equatable, Hashable, Sendable {
     /// user is both the default Kind and also the kind used for legacy users in earlier versions of this SDK.
     case user
 

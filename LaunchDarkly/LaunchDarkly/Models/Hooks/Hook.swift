@@ -6,7 +6,7 @@ import Foundation
 public typealias EvaluationSeriesData = [String: Any]
 
 /// Protocol for extending SDK functionality via hooks.
-public protocol Hook {
+public protocol Hook: Sendable {
     /// Get metadata about the hook implementation.
     func metadata() -> Metadata
     /// The before method is called during the execution of a variation method before the flag value has been

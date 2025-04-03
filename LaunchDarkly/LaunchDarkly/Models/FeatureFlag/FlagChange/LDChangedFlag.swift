@@ -7,7 +7,7 @@ import Foundation
  `LDClient.observe(key:owner:handler:)`, `LDClient.observe(keys:owner:handler:)`, and
  `LDClient.observeAll(owner:handler:)` for more details.
  */
-public struct LDChangedFlag {
+public struct LDChangedFlag: Sendable {
     /// The key of the changed feature flag
     public let key: LDFlagKey
     /// The feature flag's value before the change.

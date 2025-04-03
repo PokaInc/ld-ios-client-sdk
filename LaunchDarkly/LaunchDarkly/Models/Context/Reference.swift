@@ -1,7 +1,7 @@
 import Foundation
 
 /// An enumeration describing the individual failure conditions which may occur when constructing a `Reference`.
-public enum ReferenceError: Codable, Equatable, Error {
+public enum ReferenceError: Codable, Equatable, Error, Sendable {
     /// empty means that you tried to create a `Reference` from an empty string, or a string that consisted only of a
     /// slash.
     ///
@@ -87,7 +87,7 @@ extension ReferenceError: CustomStringConvertible {
 /// - Reference("name") or Reference("/name") would refer to the value "xyz"
 /// - Reference("/address/street") would refer to the value "99 Main St."
 /// - Reference("a/b") or Reference("/a~1b") would refer to the value "ok"
-public struct Reference: Codable {
+public struct Reference: Codable, Sendable {
     private var error: ReferenceError?
     private var rawPath: String
     private var components: [String] = []
