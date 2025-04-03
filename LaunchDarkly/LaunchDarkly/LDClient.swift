@@ -371,7 +371,7 @@ public class LDClient {
 
     public func identify(context: LDContext, timeout: TimeInterval) async -> IdentifyResult {
         await withCheckedContinuation { continuation in
-            identify(context: context, timeout: timeout, completion: { result in
+            identify(context: context, timeout: timeout, useCache: .yes, completion: { result in
                 continuation.resume(returning: result)
             })
         }
@@ -863,7 +863,7 @@ public class LDClient {
 
     public static func start(config: LDConfig, context: LDContext? = nil, startWaitSeconds: TimeInterval) async -> Bool {
         await withCheckedContinuation { continuation in
-            LDClient.start(config: config, context: context, startWaitSeconds: startWaitSeconds) { timeout in
+            LDClient.start(serviceFactory: nil, config: config, context: context, startWaitSeconds: startWaitSeconds) { timeout in
                 continuation.resume(returning: timeout)
             }
         }
