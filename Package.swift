@@ -5,10 +5,10 @@ import PackageDescription
 let package = Package(
     name: "LaunchDarkly",
     platforms: [
-        .iOS(.v16),
-        .macOS(.v14),
+        .iOS(.v17),
+        .macOS(.v15),
         .watchOS(.v10),
-        .tvOS(.v16)
+        .tvOS(.v17)
     ],
     products: [
         .library(
